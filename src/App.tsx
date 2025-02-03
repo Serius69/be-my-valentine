@@ -129,6 +129,7 @@ const App: React.FC = () => {
           
           What do you say?<br />
           P.S. - No pressure🤗
+          By: Serius69
         </Question>
         {!yesClicked ? (
           <ButtonContainer>

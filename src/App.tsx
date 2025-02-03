@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import Confetti from "react-confetti";
 import styled from "styled-components";
 import valentineMusic from "./valentine-music.mp3";
-import valentineImage from "./valentine-image.jpg";
 
 const Container = styled.div`
   display: flex;
@@ -12,28 +11,32 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: #ffebef;
+  background-color: rgb(255, 235, 235);
   text-align: center;
   padding: 20px;
   box-sizing: border-box;
   position: relative;
 `;
 
-const BackgroundImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.3;
-  z-index: -1;
+const GifImage = styled.img`
+  width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+  z-index: 2;
+`;
+
+const ContentWrapper = styled.div`
+  position: relative;
+  z-index: 2;
 `;
 
 const Question = styled(motion.h1)`
-  font-size: 4vw;
-  color: #d63384;
+  font-size: 2vw;
+  color: rgb(255, 255, 255);
   font-weight: bold;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
 `;
 
 const ButtonContainer = styled.div`
@@ -55,7 +58,7 @@ const Button = styled(motion.button)`
 `;
 
 const YesButton = styled(Button)`
-  background-color: #ff4081;
+  background-color: rgb(255, 64, 64);
   color: white;
 `;
 
@@ -66,7 +69,7 @@ const NoButton = styled(Button)`
 
 const SuccessMessage = styled(motion.h2)`
   font-size: 3vw;
-  color: #d63384;
+  color: rgb(214, 51, 51);
   margin-top: 20px;
   font-weight: bold;
 `;
@@ -76,7 +79,7 @@ const MuteButton = styled(Button)`
   top: 10px;
   right: 10px;
   font-size: 1rem;
-  background-color: #d63384;
+  background-color: rgb(255, 0, 0);
   color: white;
 `;
 
@@ -109,41 +112,50 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <BackgroundImage src={valentineImage} alt="Valentine" />
-      {yesClicked && <Confetti />}
       <MuteButton onClick={toggleMusic}>{isPlaying ? "🔊 Mute" : "🔇 Play Music"}</MuteButton>
-      <Question
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Will You Be My Valentine? ❤️
-      </Question>
-      {!yesClicked ? (
-        <ButtonContainer>
-          <YesButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={handleYesClick}
-          >
-            Yes
-          </YesButton>
-          <NoButton
-            whileHover={{ x: noPosition.x, y: noPosition.y }}
-            onMouseEnter={moveNoButton}
-          >
-            No
-          </NoButton>
-        </ButtonContainer>
-      ) : (
-        <SuccessMessage
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5 }}
+      <ContentWrapper>
+        {yesClicked && <Confetti />}
+        <GifImage src={yesClicked ? "/dudu.gif" : "/valentine-image.gif"} alt="V GIF" />
+        <Question
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
         >
-          Yay! Happy Valentine's Day! ❤️🎉
-        </SuccessMessage>
-      )}
+          💘 Will You Be My Valentine? 💘<br /><br />
+          Just like stars need the night sky,<br />
+          And flowers need the sun,<br />
+          My days would be so much brighter<br />
+          If you'd be my special one!<br /><br />
+          
+          What do you say?<br />
+          P.S. - No pressure🤗
+        </Question>
+        {!yesClicked ? (
+          <ButtonContainer>
+            <YesButton
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleYesClick}
+            >
+              Absolutely Yes!!!
+            </YesButton>
+            <NoButton
+              whileHover={{ x: noPosition.x, y: noPosition.y }}
+              onMouseEnter={moveNoButton}
+            >
+              No :(
+            </NoButton>
+          </ButtonContainer>
+        ) : (
+          <SuccessMessage
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            I already knew you would say yes my love ❤️🎉
+          </SuccessMessage>
+        )}
+      </ContentWrapper>
     </Container>
   );
 };
